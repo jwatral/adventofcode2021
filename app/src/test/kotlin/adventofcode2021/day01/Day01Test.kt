@@ -4,7 +4,8 @@ import adventofcode2021.common.getInputForDay
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class Day01Test {
+internal class Day01Test {
+
     private val exampleInput = example.lines().map { it.toInt() }
     private val taskInput = getInputForDay(1).lines().mapNotNull { it.toIntOrNull() }
 

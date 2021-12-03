@@ -9,6 +9,14 @@ internal object SolutionDay02 {
         return horizontalPosition * (depthIncrease - depthDecrease)
     }
 
+    fun calculatePart2(instructions: List<Instruction>): Int =
+        instructions.fold(Position()) { position, instruction -> when (instruction.direction) {
+            Direction.FORWARD -> position.copy(horizontal = position.horizontal + instruction.units, depth = position.depth + position.aim * instruction.units)
+            Direction.UP -> position.copy(aim = position.aim - instruction.units)
+            Direction.DOWN -> position.copy(aim = position.aim + instruction.units)
+        } }.let { it.depth * it.horizontal }
+
+    data class Position(val horizontal: Int = 0, val depth: Int = 0, val aim: Int = 0)
 }
 
 internal enum class Direction {
