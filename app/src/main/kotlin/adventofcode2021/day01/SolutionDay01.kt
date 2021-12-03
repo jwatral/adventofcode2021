@@ -1,6 +1,6 @@
 package adventofcode2021.day01
 
-object Solution {
+internal object SolutionDay01 {
 
     fun calculatePart1(input: List<Int>): Int = input.zipWithNext { a, b -> b > a }.count { it }
 

@@ -10,25 +10,25 @@ class Day01Test {
 
     @Test
     fun examplePart1() {
-        val result = Solution.calculatePart1(exampleInput)
+        val result = SolutionDay01.calculatePart1(exampleInput)
         assertEquals(7, result)
     }
 
     @Test
     fun examplePart2() {
-        val result = Solution.calculatePart2(exampleInput)
+        val result = SolutionDay01.calculatePart2(exampleInput)
         assertEquals(5, result)
     }
 
     @Test
     fun taskPart1() {
-        val result = Solution.calculatePart1(taskInput)
+        val result = SolutionDay01.calculatePart1(taskInput)
         assertEquals(1400, result)
     }
 
     @Test
     fun taskPart2() {
-        val result = Solution.calculatePart2(taskInput)
+        val result = SolutionDay01.calculatePart2(taskInput)
         assertEquals(1429, result)
     }
 }
