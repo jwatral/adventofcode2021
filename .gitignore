@@ -102,3 +102,6 @@ build
 
 # secret properties
 secret.properties
+
+# task inputs
+task-inputs/
