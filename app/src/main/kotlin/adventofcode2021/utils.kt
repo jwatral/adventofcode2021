@@ -1,4 +1,4 @@
-package adventofcode2021.common
+package adventofcode2021
 
 import java.net.URI
 import java.net.http.HttpClient
@@ -13,7 +13,7 @@ import kotlin.io.path.readText
 import kotlin.io.path.writeText
 
 
-val RESOURCES_DIR = Path("src", "test", "resources")
+val RESOURCES_DIR = Path("src", "main", "resources")
 
 val SESSION_TOKEN = Properties().apply {
     load(RESOURCES_DIR.resolve("secret.properties").readBytes().inputStream())
