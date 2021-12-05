@@ -1,9 +1,9 @@
-package adventofcode2021.day01
+package adventofcode2021
 
-import adventofcode2021.CommonTask
+import adventofcode2021.common.CommonTask
 
 
-internal class Day01Part1 : CommonTask<List<Int>, Int>(
+class Day01Part1 : CommonTask<List<Int>, Int>(
     dayNum = 1,
     example = example,
     inputConverter = inputConverter,
@@ -14,7 +14,7 @@ internal class Day01Part1 : CommonTask<List<Int>, Int>(
     override fun calculateResult(input: List<Int>): Int = input.zipWithNext { a, b -> b > a }.count { it }
 }
 
-internal class Day01Part2 : CommonTask<List<Int>, Int>(
+class Day01Part2 : CommonTask<List<Int>, Int>(
     dayNum = 1,
     example = example,
     inputConverter = inputConverter,

@@ -1,4 +1,4 @@
-package adventofcode2021
+package adventofcode2021.common
 
 import org.junit.Test
 import kotlin.test.assertEquals

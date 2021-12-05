@@ -1,4 +1,4 @@
-package adventofcode2021
+package adventofcode2021.common
 
 import java.net.URI
 import java.net.http.HttpClient

@@ -1,8 +1,8 @@
-package adventofcode2021.day03
+package adventofcode2021
 
-import adventofcode2021.CommonTask
+import adventofcode2021.common.CommonTask
 
-internal class Day03Part1 : CommonTask<List<String>, Int>(
+class Day03Part1 : CommonTask<List<String>, Int>(
     dayNum = 3,
     example = example,
     inputConverter = inputConverter,
@@ -25,7 +25,7 @@ internal class Day03Part1 : CommonTask<List<String>, Int>(
     }
 }
 
-internal class Day03Part2 : CommonTask<List<String>, Int>(
+class Day03Part2 : CommonTask<List<String>, Int>(
     dayNum = 3,
     example = example,
     inputConverter = inputConverter,
@@ -54,9 +54,9 @@ internal class Day03Part2 : CommonTask<List<String>, Int>(
     }
 }
 
-fun String.binaryStringToInt(): Int = Integer.parseInt(this, 2)
+private fun String.binaryStringToInt(): Int = Integer.parseInt(this, 2)
 
-val inputConverter: (String) -> List<String> = { it.trim().lines() }
+private val inputConverter: (String) -> List<String> = { it.trim().lines() }
 
 private val example = """
     00100

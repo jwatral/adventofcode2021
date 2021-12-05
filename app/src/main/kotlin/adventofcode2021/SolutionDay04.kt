@@ -1,8 +1,8 @@
-package adventofcode2021.day04
+package adventofcode2021
 
-import adventofcode2021.CommonTask
+import adventofcode2021.common.CommonTask
 
-internal class Day04Part1 : CommonTask<Input, Int>(
+class Day04Part1 : CommonTask<Input, Int>(
     dayNum = 4,
     example = example,
     inputConverter = inputConverter,
@@ -17,7 +17,7 @@ internal class Day04Part1 : CommonTask<Input, Int>(
         return sumOfUnmarkedNumbers * sequence.last()
     }
 
-    fun findWinningBoardAndSequence(numbers: List<Int>, flattenBoards: List<List<List<Int>>>, position: Int = 5): Pair<Int, List<Int>> {
+    private fun findWinningBoardAndSequence(numbers: List<Int>, flattenBoards: List<List<List<Int>>>, position: Int = 5): Pair<Int, List<Int>> {
         val sequence = numbers.take(position)
         flattenBoards.forEachIndexed { index, lists ->
             if(lists.any { sequence.containsAll(it) }) return (index to sequence)
@@ -26,7 +26,7 @@ internal class Day04Part1 : CommonTask<Input, Int>(
     }
 }
 
-internal class Day04Part2 : CommonTask<Input, Int>(
+class Day04Part2 : CommonTask<Input, Int>(
     dayNum = 4,
     example = example,
     inputConverter = inputConverter,
@@ -41,7 +41,7 @@ internal class Day04Part2 : CommonTask<Input, Int>(
         return sumOfUnmarkedNumbers * sequence.last()
     }
 
-    fun findLoosingBoardAndSequence(numbers: List<Int>, flattenBoards: List<List<List<Int>>>, position: Int = 5, winningBoardsAndSequences: MutableList<Pair<Int, List<Int>>> = mutableListOf()): Pair<Int, List<Int>> {
+    private fun findLoosingBoardAndSequence(numbers: List<Int>, flattenBoards: List<List<List<Int>>>, position: Int = 5, winningBoardsAndSequences: MutableList<Pair<Int, List<Int>>> = mutableListOf()): Pair<Int, List<Int>> {
         val sequence = numbers.take(position)
         flattenBoards.forEachIndexed { index, lists ->
             if(lists.any { sequence.containsAll(it) } && !winningBoardsAndSequences.map {it.first}.contains(index)) winningBoardsAndSequences.add((index to sequence))

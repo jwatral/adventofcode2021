@@ -1,10 +1,10 @@
-package adventofcode2021.day02
+package adventofcode2021
 
-import adventofcode2021.CommonTask
-import adventofcode2021.day02.Instruction.Companion.toInstruction
+import adventofcode2021.Instruction.Companion.toInstruction
+import adventofcode2021.common.CommonTask
 
 
-internal class Day02Part1 : CommonTask<List<Instruction>, Int>(
+class Day02Part1 : CommonTask<List<Instruction>, Int>(
     dayNum = 2,
     example = example,
     inputConverter = inputConverter,
@@ -20,7 +20,7 @@ internal class Day02Part1 : CommonTask<List<Instruction>, Int>(
     }
 }
 
-internal class Day02Part2 : CommonTask<List<Instruction>, Int>(
+class Day02Part2 : CommonTask<List<Instruction>, Int>(
     dayNum = 2,
     example = example,
     inputConverter = inputConverter,
@@ -38,11 +38,11 @@ internal class Day02Part2 : CommonTask<List<Instruction>, Int>(
     data class Position(val horizontal: Int = 0, val depth: Int = 0, val aim: Int = 0)
 }
 
-internal enum class Direction {
+enum class Direction {
     UP, DOWN, FORWARD
 }
 
-internal data class Instruction(val direction: Direction, val units: Int) {
+data class Instruction(val direction: Direction, val units: Int) {
     companion object {
         fun String.toInstruction(): Instruction =
             this.split(" ").let { Instruction(Direction.valueOf(it[0].uppercase()), it[1].toInt()) }
