@@ -2,7 +2,7 @@ package adventofcode2021
 
 import adventofcode2021.common.CommonTask
 
-class Day06Part1 : CommonTask<List<Int>, Int>(
+class Day06Part1 : CommonTask<List<Int>, Long>(
     dayNum = 6,
     example = example,
     inputConverter = inputConverter,
@@ -10,27 +10,33 @@ class Day06Part1 : CommonTask<List<Int>, Int>(
     taskResult = 387413,
 ) {
 
-    override fun calculateResult(initialState: List<Int>): Int {
-        val mutableState = initialState.toMutableList()
-        repeat(80) { tick(mutableState) }
-        return mutableState.size
-    }
+    override fun calculateResult(initialState: List<Int>): Long = calculateNumOfFishes(initialState, 80)
+}
 
-    private fun tick(state: MutableList<Int>) {
-        var fishesToCreate = 0
-        state.forEachIndexed() { index, stateValue ->
-            state[index] = (when(stateValue) {
-                0 -> { fishesToCreate++; 6 }
-                else -> stateValue - 1
-            })
-        }
-        repeat(fishesToCreate){ state.add(8) }
+class Day06Part2 : CommonTask<List<Int>, Long>(
+    dayNum = 6,
+    example = example,
+    inputConverter = inputConverter,
+    exampleResult = 26984457539,
+    taskResult = 1738377086345,
+) {
+
+    override fun calculateResult(initialState: List<Int>): Long = calculateNumOfFishes(initialState, 256)
+}
+
+private fun calculateNumOfFishes(initialState: List<Int>, days: Int): Long {
+    val fishesPerDay = (0..8).map { day -> initialState.count { day == it }.toLong() }.toMutableList()
+    repeat(days) {
+        val newFishes = fishesPerDay[0]
+        (0..7).forEach { fishesPerDay[it] = fishesPerDay[it+1] }
+        fishesPerDay[6] += newFishes
+        fishesPerDay[8] = newFishes
     }
+    return fishesPerDay.sum()
 }
 
 private val inputConverter: (String) -> List<Int> = { s ->
     s.trim().split(",").map { it.toInt() }
 }
-private fun String.toPoint(): Point = this.trim().split(",").map { it.toInt() }.let { Point(it[0], it[1]) }
 
 private val example = "3,4,3,1,2"
