@@ -25,16 +25,20 @@ class Day07Part2 : CommonTask<List<Int>, Int>(
     example = example,
     inputConverter = inputConverter,
     exampleResult = 168,
-    taskResult = 351901,
+    taskResult = 101079875,
 ) {
 
     override fun calculateResult(initialPositions: List<Int>): Int {
         val minValue = initialPositions.minOrNull() ?: 0
         val maxValue = initialPositions.maxOrNull() ?: 0
         return (minValue..maxValue).minOfOrNull { checkedPosition ->
-            initialPositions.sumOf { abs(it - checkedPosition) }
+            initialPositions.sumOf { sumOfArithmeticProgression(it, checkedPosition) }
         } ?: 0
     }
+
+    private fun sumOfArithmeticProgression(start: Int, end: Int): Int =
+        (1..abs(start - end)).fold(0){ acc, n -> acc + n }
+
 }
 
 private val inputConverter: (String) -> List<Int> = { s ->
