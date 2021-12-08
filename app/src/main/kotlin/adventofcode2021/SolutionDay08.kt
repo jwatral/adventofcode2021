@@ -12,10 +12,76 @@ class Day08Part1 : CommonTask<List<Day08Input>, Int>(
     private val uniqueNumOfSegments = listOf(2, 4, 3, 7)
 
     override fun calculateResult(input: List<Day08Input>): Int =
-        input.map { it.output }
-            .map { it.split(" " ) }
-            .flatten()
-            .count { uniqueNumOfSegments.contains(it.length) }
+        input.map { it.output }.map { it.split(" ") }.flatten().count { uniqueNumOfSegments.contains(it.length) }
+}
+
+class Day08Part2 : CommonTask<List<Day08Input>, Int>(
+    dayNum = 8,
+    example = example,
+    inputConverter = inputConverter,
+    exampleResult = 61229,
+    taskResult = 989396,
+) {
+
+    private val realMapping = mapOf(
+        "abcefg" to 0,
+        "cf" to 1,
+        "acdeg" to 2,
+        "acdfg" to 3,
+        "bcdf" to 4,
+        "abdfg" to 5,
+        "abdefg" to 6,
+        "acf" to 7,
+        "abcdefg" to 8,
+        "abcdfg" to 9,
+    ).mapKeys { it.key.toCharSet() }.mapValues { it.value.toString() }
+
+    override fun calculateResult(input: List<Day08Input>): Int = input.sumOf(::decode)
+
+    private fun decode(input: Day08Input): Int {
+        val mapping = findMapping(input.signalPatterns)
+        return input.output
+            .split(" ")
+            .map { it.toCharSet() }
+            .map { it.map { mapping[it]!! } }
+            .joinToString("") { realMapping[it.toSet()]!! }
+            .toInt()
+    }
+
+    private fun findMapping(signalPatterns: String): Map<Char, Char> {
+        val patterns = signalPatterns.split(" ")
+        val one = patterns.find { it.length == 2 }.toCharSet()
+        val four = patterns.find { it.length == 4 }.toCharSet()
+        val seven = patterns.find { it.length == 3 }.toCharSet()
+        val eight = patterns.find { it.length == 7 }.toCharSet()
+        // 3a 3b 2c 2d 2e 3f 3g
+        val zeroOrSixOrNine =
+            patterns.filter { it.length == 6 }.joinToString("").groupBy { it }.map { it.key to it.value.size }.toMap()
+        val twoOrThreeOrFive =
+            patterns.filter { it.length == 5 }.joinToString("").groupBy { it }.map { it.key to it.value.size }.toMap()
+        val a = (seven - one).first()
+        val bd = (four - one)
+        val eg = eight - (four + seven)
+        val be = twoOrThreeOrFive.filter { it.value == 1 }.keys
+        val b = be - eg
+        val d = bd - b
+        val e = be - b
+        val g = eg - e
+        val cde = zeroOrSixOrNine.filter { it.value == 2 }.keys
+        val c = cde - (d + e)
+        val f = one - c
+        return mapOf(
+            a to 'a',
+            b.first() to 'b',
+            c.first() to 'c',
+            d.first() to 'd',
+            e.first() to 'e',
+            f.first() to 'f',
+            g.first() to 'g',
+        )
+    }
+
+    private fun String?.toCharSet() = this!!.toCharArray().toSet()
 }
 
 data class Day08Input(val signalPatterns: String, val output: String)
