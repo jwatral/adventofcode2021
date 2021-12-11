@@ -10,15 +10,9 @@ class Day09Part1 : CommonTask<Heightmap, Int>(
     taskResult = 575,
 ) {
 
-    override fun calculateResult(input: Heightmap): Int {
-        var sum = 0
-        for(x in input[0].indices) {
-            for(y in input.indices) {
-                if(isLowerThanAllAdjacentLocations(x, y, input)) sum += input[y][x] + 1
-            }
-        }
-        return sum
-    }
+    override fun calculateResult(input: Heightmap): Int =
+        input.mapIndexed { y, row -> row.mapIndexed { x, cell -> if(isLowerThanAllAdjacentLocations(x, y, input)) cell + 1 else 0 } }
+            .flatten().sum()
 
     private fun isLowerThanAllAdjacentLocations(x: Int, y: Int, heightmap: Heightmap): Boolean {
         val value = heightmap[y][x]
