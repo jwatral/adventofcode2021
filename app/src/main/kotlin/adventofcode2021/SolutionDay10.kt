@@ -29,14 +29,50 @@ class Day10Part1 : CommonTask<List<String>, Int>(
             }
         return null
     }
+
+    private val pointsForIllegalChar = mapOf(
+        ')' to 3,
+        ']' to 57,
+        '}' to 1197,
+        '>' to 25137,
+    )
 }
 
-private val pointsForIllegalChar = mapOf(
-    ')' to 3,
-    ']' to 57,
-    '}' to 1197,
-    '>' to 25137,
-)
+class Day10Part2 : CommonTask<List<String>, Long>(
+    dayNum = 10,
+    example = example,
+    inputConverter = inputConverter,
+    exampleResult = 288957,
+    taskResult = 1105996483,
+) {
+
+    override fun calculateResult(input: List<String>): Long =
+        input.mapNotNull { findUnmatchedCharacters(it) }
+            .map { it.mapNotNull { matchingBrackets[it.char] } }
+            .map { it.reversed().fold(0L) {acc, c -> (acc * 5) + (pointsForUnmatchedChar[c] ?: 0) } }
+            .sorted()
+            .let { it.elementAt(it.size/2) }
+
+    private fun findUnmatchedCharacters(string: String): List<Bracket>? {
+        val stack = Stack<Bracket>()
+        string.mapIndexed(::Bracket)
+            .forEach { bracket ->
+                if(matchingBrackets.keys.contains(bracket.char)) stack.push(bracket)
+                else {
+                    if(stack.peek().matches(bracket)) stack.pop()
+                    else return null
+                }
+            }
+        return stack.toList()
+    }
+
+    private val pointsForUnmatchedChar = mapOf(
+        ')' to 1,
+        ']' to 2,
+        '}' to 3,
+        '>' to 4,
+    )
+}
 
 private val matchingBrackets = mapOf(
     '(' to ')',
