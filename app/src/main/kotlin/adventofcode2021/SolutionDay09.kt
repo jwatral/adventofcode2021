@@ -31,21 +31,23 @@ class Day09Part2 : CommonTask<Heightmap, Int>(
         val lowPoints = input.mapIndexed { y, row ->
             row.mapIndexedNotNull { x, _ -> if (isLowerThanAllAdjacentLocations(x, y, input)) x to y else null }
         }.flatten()
-        val basinSizes = lowPoints.map { visitedPoints = mutableListOf(); measureBasin(it.first, it.second, input); visitedPoints.size }
+        val basinSizes = lowPoints.map {
+            val visitedPoints: MutableList<Pair<Int, Int>> = mutableListOf()
+            measureBasin(it.first, it.second, input, visitedPoints)
+            visitedPoints.size
+        }
 
         return basinSizes.sortedByDescending { it }.take(3).fold(1) { acc, i -> acc * i }
     }
 
-    private var visitedPoints: MutableList<Pair<Int, Int>> = mutableListOf()
-
-    private fun measureBasin(x: Int, y: Int, input: List<List<Int>>) {
+    private fun measureBasin(x: Int, y: Int, input: List<List<Int>>, visitedPoints: MutableList<Pair<Int, Int>>) {
         if (x < 0 || y < 0 || x >= input[0].size || y >= input.size || input[y][x] == 9 || visitedPoints.contains(x to y))
             return
         visitedPoints += (x to y)
-        measureBasin(x - 1, y, input)
-        measureBasin(x + 1, y, input)
-        measureBasin(x, y - 1, input)
-        measureBasin(x, y + 1, input)
+        measureBasin(x - 1, y, input, visitedPoints)
+        measureBasin(x + 1, y, input, visitedPoints)
+        measureBasin(x, y - 1, input, visitedPoints)
+        measureBasin(x, y + 1, input, visitedPoints)
     }
 }
 
