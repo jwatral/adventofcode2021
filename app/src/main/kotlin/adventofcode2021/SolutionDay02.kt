@@ -1,57 +1,49 @@
 package adventofcode2021
 
-import adventofcode2021.Instruction.Companion.toInstruction
-import adventofcode2021.common.CommonTask
+import adventofcode2021.Day02.Instruction.Companion.toInstruction
+import adventofcode2021.common.CommonPartTest
+import adventofcode2021.common.Day
 
+private object Day02 : Day<List<Day02.Instruction>> {
+    override val dayNum = 2
+    override fun inputConverter(input: String): List<Instruction> = input.trim().lines().map { it.toInstruction() }
 
-class Day02Part1 : CommonTask<List<Instruction>, Int>(
-    dayNum = 2,
-    example = example,
-    inputConverter = inputConverter,
-    exampleResult = 150,
-    taskResult = 2272262,
-) {
+    class Day02Part1 : CommonPartTest<List<Instruction>>(
+        day = this,
+        exampleResult = "150",
+        taskResult = "2272262",
+    ) {
 
-    override fun calculateResult(instructions: List<Instruction>): Int {
-        val horizontalPosition = instructions.filter { it.direction == Direction.FORWARD }.sumOf { it.units }
-        val depthIncrease = instructions.filter { it.direction == Direction.DOWN }.sumOf { it.units }
-        val depthDecrease = instructions.filter { it.direction == Direction.UP }.sumOf { it.units }
-        return horizontalPosition * (depthIncrease - depthDecrease)
+        override fun calculateResult(instructions: List<Instruction>): String {
+            val horizontalPosition = instructions.filter { it.direction == Direction.FORWARD }.sumOf { it.units }
+            val depthIncrease = instructions.filter { it.direction == Direction.DOWN }.sumOf { it.units }
+            val depthDecrease = instructions.filter { it.direction == Direction.UP }.sumOf { it.units }
+            return (horizontalPosition * (depthIncrease - depthDecrease)).toString()
+        }
     }
-}
 
-class Day02Part2 : CommonTask<List<Instruction>, Int>(
-    dayNum = 2,
-    example = example,
-    inputConverter = inputConverter,
-    exampleResult = 900,
-    taskResult = 2134882034,
-) {
+    class Day02Part2 : CommonPartTest<List<Instruction>>(
+        day = this,
+        exampleResult = "900",
+        taskResult = "2134882034",
+    ) {
 
-    override fun calculateResult(instructions: List<Instruction>): Int =
-        instructions.fold(Position()) { position, instruction -> when (instruction.direction) {
-            Direction.FORWARD -> position.copy(horizontal = position.horizontal + instruction.units, depth = position.depth + position.aim * instruction.units)
-            Direction.UP -> position.copy(aim = position.aim - instruction.units)
-            Direction.DOWN -> position.copy(aim = position.aim + instruction.units)
-        } }.let { it.depth * it.horizontal }
+        override fun calculateResult(instructions: List<Instruction>): String =
+            instructions.fold(Position()) { position, instruction ->
+                when (instruction.direction) {
+                    Direction.FORWARD -> position.copy(
+                        horizontal = position.horizontal + instruction.units,
+                        depth = position.depth + position.aim * instruction.units
+                    )
+                    Direction.UP -> position.copy(aim = position.aim - instruction.units)
+                    Direction.DOWN -> position.copy(aim = position.aim + instruction.units)
+                }
+            }.let { it.depth * it.horizontal }.toString()
 
-    data class Position(val horizontal: Int = 0, val depth: Int = 0, val aim: Int = 0)
-}
-
-enum class Direction {
-    UP, DOWN, FORWARD
-}
-
-data class Instruction(val direction: Direction, val units: Int) {
-    companion object {
-        fun String.toInstruction(): Instruction =
-            this.split(" ").let { Instruction(Direction.valueOf(it[0].uppercase()), it[1].toInt()) }
+        data class Position(val horizontal: Int = 0, val depth: Int = 0, val aim: Int = 0)
     }
-}
 
-private val inputConverter: (String) -> List<Instruction> = { s: String -> s.trim().lines().map { it.toInstruction() }}
-
-private val example = """
+    override val example = """
     forward 5
     down 5
     forward 8
@@ -59,3 +51,16 @@ private val example = """
     down 8
     forward 2
 """.trimIndent()
+
+    enum class Direction {
+        UP, DOWN, FORWARD
+    }
+
+    data class Instruction(val direction: Direction, val units: Int) {
+        companion object {
+            fun String.toInstruction(): Instruction =
+                this.split(" ").let { Instruction(Direction.valueOf(it[0].uppercase()), it[1].toInt()) }
+        }
+    }
+
+}

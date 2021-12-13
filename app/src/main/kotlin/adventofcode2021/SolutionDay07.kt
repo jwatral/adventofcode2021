@@ -1,48 +1,46 @@
 package adventofcode2021
 
-import adventofcode2021.common.CommonTask
+import adventofcode2021.common.CommonPartTest
+import adventofcode2021.common.Day
 import kotlin.math.abs
 
-class Day07Part1 : CommonTask<List<Int>, Int>(
-    dayNum = 7,
-    example = example,
-    inputConverter = inputConverter,
-    exampleResult = 37,
-    taskResult = 351901,
-) {
+private object Day07 : Day<List<Int>> {
+    override val dayNum = 7
+    override fun inputConverter(input: String) =
+        input.trim().split(",").map { it.toInt() }
 
-    override fun calculateResult(initialPositions: List<Int>): Int {
-        val minValue = initialPositions.minOrNull() ?: 0
-        val maxValue = initialPositions.maxOrNull() ?: 0
-        return (minValue..maxValue).minOfOrNull { checkedPosition ->
-            initialPositions.sumOf { abs(it - checkedPosition) }
-        } ?: 0
-    }
-}
-
-class Day07Part2 : CommonTask<List<Int>, Int>(
-    dayNum = 7,
-    example = example,
-    inputConverter = inputConverter,
-    exampleResult = 168,
-    taskResult = 101079875,
-) {
-
-    override fun calculateResult(initialPositions: List<Int>): Int {
-        val minValue = initialPositions.minOrNull() ?: 0
-        val maxValue = initialPositions.maxOrNull() ?: 0
-        return (minValue..maxValue).minOfOrNull { checkedPosition ->
-            initialPositions.sumOf { sumOfArithmeticProgression(it, checkedPosition) }
-        } ?: 0
+    class Day07Part1 : CommonPartTest<List<Int>>(
+        day = this,
+        exampleResult = "37",
+        taskResult = "351901",
+    ) {
+        override fun calculateResult(input: List<Int>): String {
+            val minValue = input.minOrNull() ?: 0
+            val maxValue = input.maxOrNull() ?: 0
+            val result = (minValue..maxValue).minOfOrNull { checkedPosition ->
+                input.sumOf { abs(it - checkedPosition) }
+            } ?: 0
+            return result.toString()
+        }
     }
 
-    private fun sumOfArithmeticProgression(start: Int, end: Int): Int =
-        (1..abs(start - end)).fold(0){ acc, n -> acc + n }
+    class Day07Part2 : CommonPartTest<List<Int>>(
+        day = this,
+        exampleResult = "168",
+        taskResult = "101079875",
+    ) {
+        override fun calculateResult(input: List<Int>): String {
+            val minValue = input.minOrNull() ?: 0
+            val maxValue = input.maxOrNull() ?: 0
+            val result = (minValue..maxValue).minOfOrNull { checkedPosition ->
+                input.sumOf { sumOfArithmeticProgression(it, checkedPosition) }
+            } ?: 0
+            return result.toString()
+        }
 
+        private fun sumOfArithmeticProgression(start: Int, end: Int): Int =
+            (1..abs(start - end)).fold(0) { acc, n -> acc + n }
+    }
+
+    override val example = "16,1,2,0,4,2,7,1,2,14"
 }
-
-private val inputConverter: (String) -> List<Int> = { s ->
-    s.trim().split(",").map { it.toInt() }
-}
-
-private val example = "16,1,2,0,4,2,7,1,2,14"
