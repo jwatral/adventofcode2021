@@ -2,6 +2,7 @@ package adventofcode2021
 
 import adventofcode2021.common.CommonPartTest
 import adventofcode2021.common.Day
+import adventofcode2021.common.Point
 
 private object Day13 : Day<Day13.Input> {
     override val dayNum = 13
@@ -45,7 +46,6 @@ private object Day13 : Day<Day13.Input> {
         }
     }
 
-    data class Point(val x: Int, val y: Int)
     data class FoldPoint(val axis: String, val index: Int)
     data class Input(val points: List<Point>, val folds: List<FoldPoint>)
     fun List<Point>.print() {

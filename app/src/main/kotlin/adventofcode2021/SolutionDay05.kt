@@ -2,10 +2,10 @@ package adventofcode2021
 
 import adventofcode2021.common.CommonPartTest
 import adventofcode2021.common.Day
-import java.lang.Math.max
-import kotlin.math.abs
+import adventofcode2021.common.Line
+import adventofcode2021.common.Point
 
-private object Day05 : Day<List<Day05.Line>> {
+private object Day05 : Day<List<Line>> {
     override val dayNum = 5
     override fun inputConverter(input: String) =
         input.trim().lines().map { it.split("->") }.map { Line(it[0].toPoint(), it[1].toPoint()) }
@@ -35,26 +35,6 @@ private object Day05 : Day<List<Day05.Line>> {
             return pointOccurrences.counter.filter { it.value >= 2 }.count().toString()
         }
     }
-
-
-    data class Line(val start: Point, val end: Point) {
-        fun getAllPoints(): List<Point> {
-            val numOfPoints = max(abs(start.x - end.x), abs(start.y - end.y))
-            val xProgression = progression(start.x, end.x)
-            val yProgression = progression(start.y, end.y)
-            return (0..numOfPoints).map { Point(start.x + xProgression * it, start.y + yProgression * it) }
-        }
-
-        val isDiagonal: Boolean = start.x != end.x && start.y != end.y
-
-        private fun progression(start: Int, end: Int) = when {
-            start == end -> 0
-            start < end -> 1
-            else -> -1
-        }
-    }
-
-    data class Point(val x: Int, val y: Int)
 
     class PointOccurrences() {
         val counter: MutableMap<Point, Int> = mutableMapOf()
