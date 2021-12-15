@@ -14,7 +14,7 @@ private object Day15 : Day<Grid<PointWithValue>> {
     class Day15Part1 : CommonPartTest<Grid<PointWithValue>>(
         day = this,
         exampleResult = "40",
-        taskResult = "42",
+        taskResult = "373",
     ) {
         override fun calculateResult(input: Grid<PointWithValue>): String =
             input.toGraph()
