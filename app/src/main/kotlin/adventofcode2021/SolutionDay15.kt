@@ -4,6 +4,8 @@ import adventofcode2021.common.CommonPartTest
 import adventofcode2021.common.Day
 import adventofcode2021.common.Grid
 import adventofcode2021.common.PointWithValue
+import adventofcode2021.common.print
+import adventofcode2021.common.repeatSquareAndTransform
 import adventofcode2021.common.toGraph
 
 private object Day15 : Day<Grid<PointWithValue>> {
@@ -26,10 +28,22 @@ private object Day15 : Day<Grid<PointWithValue>> {
 
     class Day15Part2 : CommonPartTest<Grid<PointWithValue>>(
         day = this,
-        exampleResult = "42",
-        taskResult = "42",
+        exampleResult = "315",
+        taskResult = "2868",
     ) {
-        override fun calculateResult(input: Grid<PointWithValue>): String = TODO()
+        override fun calculateResult(input: Grid<PointWithValue>): String =
+            input
+                .repeatSquareAndTransform(5) { value, x, y ->
+                    val newValue = value + x + y
+                    newValue.takeIf { it < 10 } ?: (newValue - 9)
+                }
+                .let {
+                    it.print()
+                    it.toGraph().shortestPath(it.first(), it.last())
+                }
+                .sumOf { it.value }
+                .let { it - input.first().value }
+                .toString()
     }
 
     override val example = """

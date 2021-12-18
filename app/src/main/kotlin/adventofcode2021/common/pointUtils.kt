@@ -21,7 +21,9 @@ data class PointWithValue(override val x: Int, override val y: Int, val value: I
 
 fun Grid<PointWithValue>.toGraph(): Graph<PointWithValue> =
     Graph(
-        this.map { point -> this.allStraightAdjacentPoints(point).map { neigbour -> (point to neigbour) to neigbour.value } }
+        this.map { point ->
+            this.allStraightAdjacentPoints(point).map { neigbour -> (point to neigbour) to neigbour.value }
+        }
             .flatten()
             .toMap()
     )
@@ -62,3 +64,37 @@ fun <T : PointCoordinates> Grid<T>.allStraightAdjacentPoints(point: T): List<T> 
                 (it.x == point.x && it.y == point.y - 1) ||
                 (it.x == point.x && it.y == point.y + 1)
     }
+
+fun <T : PointCoordinates> Grid<T>.width() = this.maxOf { it.x }
+fun <T : PointCoordinates> Grid<T>.height() = this.maxOf { it.y }
+
+fun Grid<PointWithValue>.repeatSquareAndTransform(
+    times: Int,
+    transform: (value: Int, x: Int, y: Int) -> Int
+): Grid<PointWithValue> = this.let { grid ->
+    val width = grid.width() + 1
+    val height = grid.height() + 1
+    grid.map { originalPoint ->
+        (0 until times).map { xMultiply ->
+            (0 until times).map { yMultiply ->
+                PointWithValue(
+                    originalPoint.x + xMultiply * width,
+                    originalPoint.y + yMultiply * height,
+                    transform(originalPoint.value, xMultiply, yMultiply)
+                )
+            }
+        }
+    }.flatten().flatten()
+}
+
+fun Grid<PointWithValue>.print() {
+    val maxX = width()
+    val maxY = height()
+    for(y in 0..maxY) {
+        for(x in 0..maxX) {
+            print(this.find { it.x == x && it.y == y }?.value)
+        }
+        print("\n")
+    }
+}
+
