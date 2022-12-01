@@ -1,13 +1,14 @@
-package adventofcode2021
+package adventofcode.year2021
 
-import adventofcode2021.common.CommonPartTest
-import adventofcode2021.common.Day
-import adventofcode2021.common.Grid
-import adventofcode2021.common.PointCoordinates
-import adventofcode2021.common.allAdjacentPoints
+import adventofcode.common.CommonPartTest
+import adventofcode.common.Day
+import adventofcode.common.Grid
+import adventofcode.common.PointCoordinates
+import adventofcode.common.allAdjacentPoints
 
 private object Day11 : Day<Grid<Day11.Octopus>> {
     override val dayNum = 11
+    override val yearNum = 2021
     override fun inputConverter(input: String) =
         input.trim().lines().mapIndexed { y, row ->
             row.mapIndexed { x, initialEnergyLvl -> Octopus(x, y, initialEnergyLvl.toString().toInt()) }

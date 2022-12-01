@@ -1,4 +1,4 @@
-package adventofcode2021.common
+package adventofcode.common
 
 import java.net.URI
 import java.net.http.HttpClient
@@ -7,6 +7,7 @@ import java.net.http.HttpResponse
 import java.nio.file.Path
 import java.util.*
 import kotlin.io.path.Path
+import kotlin.io.path.createDirectories
 import kotlin.io.path.exists
 import kotlin.io.path.readBytes
 import kotlin.io.path.readText
@@ -21,20 +22,20 @@ val SESSION_TOKEN = Properties().apply {
 
 val httpClient: HttpClient = HttpClient.newBuilder().build()
 
-fun getInputForDay(dayNum: Int): String = pathForInputFile(dayNum).let { inputPath ->
+fun getInputForDay(yearNum: Int, dayNum: Int): String = pathForInputFile(yearNum, dayNum).let { inputPath ->
     if(inputPath.exists()) inputPath.readText()
-    else downloadInputForDay(dayNum).also { saveInputFile(inputPath, it) }
+    else downloadInputForDay(yearNum, dayNum).also { saveInputFile(inputPath, it) }
 }
 
-private fun saveInputFile(path: Path, input: String): String = input.also { path.writeText(it) }
+private fun saveInputFile(path: Path, input: String): String = input.also { path.parent.createDirectories(); path.writeText(it) }
 
-private fun pathForInputFile(dayNum: Int): Path =
-    RESOURCES_DIR.resolve("task-inputs").resolve("$dayNum.txt")
+private fun pathForInputFile(yearNum: Int, dayNum: Int): Path =
+    RESOURCES_DIR.resolve("task-inputs").resolve(yearNum.toString()).resolve("$dayNum.txt")
 
-private fun downloadInputForDay(dayNum: Int): String {
+private fun downloadInputForDay(yearNum: Int, dayNum: Int): String {
     val request = HttpRequest.newBuilder()
         .GET()
-        .uri(URI.create("https://adventofcode.com/2021/day/$dayNum/input"))
+        .uri(URI.create("https://adventofcode.com/$yearNum/day/$dayNum/input"))
         .setHeader("Cookie", "session=$SESSION_TOKEN")
         .build()
 

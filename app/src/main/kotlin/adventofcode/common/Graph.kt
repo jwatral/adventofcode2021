@@ -1,4 +1,4 @@
-package adventofcode2021.common
+package adventofcode.common
 
 data class Graph<T>(val weights: Map<Pair<T, T>, Int>) {
 

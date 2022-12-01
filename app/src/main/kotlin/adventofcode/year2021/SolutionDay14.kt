@@ -1,10 +1,11 @@
-package adventofcode2021
+package adventofcode.year2021
 
-import adventofcode2021.common.CommonPartTest
-import adventofcode2021.common.Day
+import adventofcode.common.CommonPartTest
+import adventofcode.common.Day
 
 private object Day14 : Day<Day14.Input> {
     override val dayNum = 14
+    override val yearNum = 2021
     override fun inputConverter(input: String): Input =
         input.trim().lines().partition { it.contains(" -> ") }
             .let { (insertions, template) ->
@@ -18,7 +19,7 @@ private object Day14 : Day<Day14.Input> {
         exampleResult = "1588",
         taskResult = "3259",
     ) {
-        override fun calculateResult(input: Input): String = Day14.calculateResult(input, 10)
+        override fun calculateResult(input: Input): String = calculateResult(input, 10)
     }
 
     class Day14Part2 : CommonPartTest<Input>(
@@ -26,7 +27,7 @@ private object Day14 : Day<Day14.Input> {
         exampleResult = "2188189693529",
         taskResult = "3459174981021",
     ) {
-        override fun calculateResult(input: Input): String = Day14.calculateResult(input, 40)
+        override fun calculateResult(input: Input): String = calculateResult(input, 40)
     }
 
     fun calculateResult(input: Input, steps: Int): String {

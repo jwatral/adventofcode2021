@@ -1,4 +1,4 @@
-package adventofcode2021.common
+package adventofcode.common
 
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -10,7 +10,7 @@ abstract class CommonPartTest<INPUT>(
 ) {
 
     private val exampleInput: INPUT = day.inputConverter(day.example)
-    private val taskInput: INPUT = day.inputConverter(getInputForDay(day.dayNum))
+    private val taskInput: INPUT = day.inputConverter(getInputForDay(day.yearNum, day.dayNum))
 
     abstract fun calculateResult(input: INPUT): String
 

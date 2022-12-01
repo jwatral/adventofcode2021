@@ -1,4 +1,4 @@
-package adventofcode2021.common
+package adventofcode.common
 
 fun <T> List<Pair<T, T>>.getUniqueValuesFromPairs(predicate: (T) -> Boolean = {true}): Set<T> =
     this.map { (a, b) -> listOf(a, b) }

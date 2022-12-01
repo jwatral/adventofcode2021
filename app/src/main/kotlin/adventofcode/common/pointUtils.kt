@@ -1,4 +1,4 @@
-package adventofcode2021.common
+package adventofcode.common
 
 import kotlin.math.abs
 

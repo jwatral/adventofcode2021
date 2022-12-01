@@ -1,11 +1,12 @@
-package adventofcode2021
+package adventofcode.year2021
 
-import adventofcode2021.Day02.Instruction.Companion.toInstruction
-import adventofcode2021.common.CommonPartTest
-import adventofcode2021.common.Day
+import adventofcode.common.CommonPartTest
+import adventofcode.common.Day
+import adventofcode.year2021.Day02.Instruction.Companion.toInstruction
 
 private object Day02 : Day<List<Day02.Instruction>> {
     override val dayNum = 2
+    override val yearNum = 2021
     override fun inputConverter(input: String): List<Instruction> = input.trim().lines().map { it.toInstruction() }
 
     class Day02Part1 : CommonPartTest<List<Instruction>>(

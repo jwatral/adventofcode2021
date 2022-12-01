@@ -1,11 +1,12 @@
-package adventofcode2021
+package adventofcode.year2021
 
-import adventofcode2021.common.CommonPartTest
-import adventofcode2021.common.Day
+import adventofcode.common.CommonPartTest
+import adventofcode.common.Day
 import java.util.*
 
 private object Day10 : Day<List<String>> {
     override val dayNum = 10
+    override val yearNum = 2021
     override fun inputConverter(input: String) =
         input.trim().lines()
 
@@ -23,7 +24,7 @@ private object Day10 : Day<List<String>> {
 
         private fun findFirstIllegalCharacter(string: String): Char? {
             val stack = Stack<Bracket>()
-            string.mapIndexed(::Bracket)
+            string.mapIndexed(Day10::Bracket)
                 .forEach { bracket ->
                     if(matchingBrackets.keys.contains(bracket.char)) stack.push(bracket)
                     else {
@@ -57,7 +58,7 @@ private object Day10 : Day<List<String>> {
 
         private fun findUnmatchedCharacters(string: String): List<Bracket>? {
             val stack = Stack<Bracket>()
-            string.mapIndexed(::Bracket)
+            string.mapIndexed(Day10::Bracket)
                 .forEach { bracket ->
                     if(matchingBrackets.keys.contains(bracket.char)) stack.push(bracket)
                     else {

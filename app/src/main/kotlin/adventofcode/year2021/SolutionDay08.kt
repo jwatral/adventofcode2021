@@ -1,10 +1,11 @@
-package adventofcode2021
+package adventofcode.year2021
 
-import adventofcode2021.common.CommonPartTest
-import adventofcode2021.common.Day
+import adventofcode.common.CommonPartTest
+import adventofcode.common.Day
 
 private object Day08 : Day<List<Day08.Input>> {
     override val dayNum = 8
+    override val yearNum = 2021
     override fun inputConverter(input: String) =
         input.trim().lines().map { it.split(" | ") }.map { Input(it[0], it[1]) }
 

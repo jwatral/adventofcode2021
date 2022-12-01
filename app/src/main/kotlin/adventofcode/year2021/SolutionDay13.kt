@@ -1,11 +1,12 @@
-package adventofcode2021
+package adventofcode.year2021
 
-import adventofcode2021.common.CommonPartTest
-import adventofcode2021.common.Day
-import adventofcode2021.common.Point
+import adventofcode.common.CommonPartTest
+import adventofcode.common.Day
+import adventofcode.common.Point
 
 private object Day13 : Day<Day13.Input> {
     override val dayNum = 13
+    override val yearNum = 2021
     override fun inputConverter(input: String) =
         input.trim().lines()
             .partition { it.startsWith("fold along") }

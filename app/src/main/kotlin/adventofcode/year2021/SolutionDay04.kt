@@ -1,13 +1,14 @@
-package adventofcode2021
+package adventofcode.year2021
 
-import adventofcode2021.common.CommonPartTest
-import adventofcode2021.common.Day
+import adventofcode.common.CommonPartTest
+import adventofcode.common.Day
 
 private typealias Board = List<List<Int>>
 private object Day04 : Day<Day04.Input> {
     override val dayNum = 4
+    override val yearNum = 2021
 
-    override fun inputConverter(input: String):  Input {
+    override fun inputConverter(input: String): Input {
         val sections = input.trim().split("\n\n")
         val numbers = sections.first().split(",").map { it.toInt() }
         val boards = sections.drop(1).map { it.lines() }

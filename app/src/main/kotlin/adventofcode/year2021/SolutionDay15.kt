@@ -1,15 +1,16 @@
-package adventofcode2021
+package adventofcode.year2021
 
-import adventofcode2021.common.CommonPartTest
-import adventofcode2021.common.Day
-import adventofcode2021.common.Grid
-import adventofcode2021.common.PointWithValue
-import adventofcode2021.common.print
-import adventofcode2021.common.repeatSquareAndTransform
-import adventofcode2021.common.toGraph
+import adventofcode.common.CommonPartTest
+import adventofcode.common.Day
+import adventofcode.common.Grid
+import adventofcode.common.PointWithValue
+import adventofcode.common.print
+import adventofcode.common.repeatSquareAndTransform
+import adventofcode.common.toGraph
 
 private object Day15 : Day<Grid<PointWithValue>> {
     override val dayNum = 15
+    override val yearNum = 2021
     override fun inputConverter(input: String) =
         input.trim().lines().let { PointWithValue.fromLines(it) }
 
