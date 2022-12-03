@@ -1,32 +1,26 @@
 package adventofcode.year2021
 
-import adventofcode.common.CommonPartTest
-import adventofcode.common.Day
 import adventofcode.common.executeUntilEmpty
 import adventofcode.common.readNBitsAsString
 import adventofcode.common.readUntilFirst
 
 private typealias Bits = Iterator<Char>
 
-private object Day16 : Day<Bits> {
-    override val dayNum = 16
-    override val yearNum = 2021
-    override fun inputConverter(input: String) =
+private object Day16 : Day2021<Bits>(dayNum = 16) {
+        override fun inputConverter(input: String) =
         input.trim()
             .map { it.digitToInt(16).toString(2).padStart(4, '0') }
             .flatMap { it.toList() }
             .iterator()
 
-    class Day16Part1 : CommonPartTest<Bits>(
-        day = this,
+    class Day16Part1 : CommonPartTest(
         exampleResult = "31",
         taskResult = "901",
     ) {
         override fun calculateResult(input: Bits): String = input.parsePacket().versions().sum().toString()
     }
 
-    class Day16Part2 : CommonPartTest<Bits>(
-        day = this,
+    class Day16Part2 : CommonPartTest(
         exampleResult = "54",
         taskResult = "110434737925",
     ) {

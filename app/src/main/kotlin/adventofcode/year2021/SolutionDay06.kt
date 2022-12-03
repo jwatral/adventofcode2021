@@ -1,24 +1,17 @@
 package adventofcode.year2021
 
-import adventofcode.common.CommonPartTest
-import adventofcode.common.Day
-
-private object Day06 : Day<List<Int>> {
-    override val dayNum = 6
-    override val yearNum = 2021
-    override fun inputConverter(input: String) =
+private object Day06 : Day2021<List<Int>>(dayNum = 6) {
+        override fun inputConverter(input: String) =
         input.trim().split(",").map { it.toInt() }
 
-    class Day06Part1 : CommonPartTest<List<Int>>(
-        day = this,
+    class Day06Part1 : CommonPartTest(
         exampleResult = "5934",
         taskResult = "387413",
     ) {
         override fun calculateResult(input: List<Int>): String = calculateNumOfFishes(input, 80)
     }
 
-    class Day06Part2 : CommonPartTest<List<Int>>(
-        day = this,
+    class Day06Part2 : CommonPartTest(
         exampleResult = "26984457539",
         taskResult = "1738377086345",
     ) {

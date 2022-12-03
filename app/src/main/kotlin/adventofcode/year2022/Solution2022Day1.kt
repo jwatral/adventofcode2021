@@ -1,11 +1,6 @@
 package adventofcode.year2022
 
-import adventofcode.common.CommonPartTest
-import adventofcode.common.Day
-
-private object Solution2022Day1 : Day<List<Solution2022Day1.Elf>> {
-    override val dayNum = 1
-    override val yearNum = 2022
+private object Solution2022Day1 : Day2022<List<Solution2022Day1.Elf>>(dayNum = 1) {
     override fun inputConverter(input: String): List<Elf> {
         val lines = input.trim().lines().map { it.toIntOrNull() }
         val elves = mutableListOf(newElf())
@@ -16,16 +11,14 @@ private object Solution2022Day1 : Day<List<Solution2022Day1.Elf>> {
         return elves
     }
 
-    class Day1Part1 : CommonPartTest<List<Elf>>(
-        day = this,
+    class Day1Part1 : CommonPartTest(
         exampleResult = "24000",
         taskResult = "66616",
     ) {
         override fun calculateResult(input: List<Elf>): String = input.maxOfOrNull { it.food.sum() }.toString()
     }
 
-    class Day1Part2 : CommonPartTest<List<Elf>>(
-        day = this,
+    class Day1Part2 : CommonPartTest(
         exampleResult = "45000",
         taskResult = "199172",
     ) {

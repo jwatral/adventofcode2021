@@ -1,18 +1,13 @@
 package adventofcode.year2021
 
-import adventofcode.common.CommonPartTest
-import adventofcode.common.Day
 import adventofcode.common.Line
 import adventofcode.common.Point
 
-private object Day05 : Day<List<Line>> {
-    override val dayNum = 5
-    override val yearNum = 2021
-    override fun inputConverter(input: String) =
+private object Day05 : Day2021<List<Line>>(dayNum = 5) {
+        override fun inputConverter(input: String) =
         input.trim().lines().map { it.split("->") }.map { Line(it[0].toPoint(), it[1].toPoint()) }
 
-    class Day05Part1 : CommonPartTest<List<Line>>(
-        day = this,
+    class Day05Part1 : CommonPartTest(
         exampleResult = "5",
         taskResult = "8111",
     ) {
@@ -24,8 +19,7 @@ private object Day05 : Day<List<Line>> {
         }
     }
 
-    class Day05Part2 : CommonPartTest<List<Line>>(
-        day = this,
+    class Day05Part2 : CommonPartTest(
         exampleResult = "12",
         taskResult = "22088",
     ) {

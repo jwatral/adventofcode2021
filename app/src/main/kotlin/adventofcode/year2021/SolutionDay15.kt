@@ -1,21 +1,16 @@
 package adventofcode.year2021
 
-import adventofcode.common.CommonPartTest
-import adventofcode.common.Day
 import adventofcode.common.Grid
 import adventofcode.common.PointWithValue
 import adventofcode.common.print
 import adventofcode.common.repeatSquareAndTransform
 import adventofcode.common.toGraph
 
-private object Day15 : Day<Grid<PointWithValue>> {
-    override val dayNum = 15
-    override val yearNum = 2021
-    override fun inputConverter(input: String) =
+private object Day15 : Day2021<Grid<PointWithValue>>(dayNum = 15) {
+        override fun inputConverter(input: String) =
         input.trim().lines().let { PointWithValue.fromLines(it) }
 
-    class Day15Part1 : CommonPartTest<Grid<PointWithValue>>(
-        day = this,
+    class Day15Part1 : CommonPartTest(
         exampleResult = "40",
         taskResult = "373",
     ) {
@@ -27,8 +22,7 @@ private object Day15 : Day<Grid<PointWithValue>> {
                 .toString()
     }
 
-    class Day15Part2 : CommonPartTest<Grid<PointWithValue>>(
-        day = this,
+    class Day15Part2 : CommonPartTest(
         exampleResult = "315",
         taskResult = "2868",
     ) {

@@ -1,17 +1,12 @@
 package adventofcode.year2021
 
-import adventofcode.common.CommonPartTest
-import adventofcode.common.Day
 import java.util.*
 
-private object Day10 : Day<List<String>> {
-    override val dayNum = 10
-    override val yearNum = 2021
-    override fun inputConverter(input: String) =
+private object Day10 : Day2021<List<String>>(dayNum = 10) {
+        override fun inputConverter(input: String) =
         input.trim().lines()
 
-    class Day10Part1 : CommonPartTest<List<String>>(
-        day = this,
+    class Day10Part1 : CommonPartTest(
         exampleResult = "26397",
         taskResult = "215229",
     ) {
@@ -43,8 +38,7 @@ private object Day10 : Day<List<String>> {
         )
     }
 
-    class Day10Part2 : CommonPartTest<List<String>>(
-        day = this,
+    class Day10Part2 : CommonPartTest(
         exampleResult = "288957",
         taskResult = "1105996483",
     ) {

@@ -1,11 +1,6 @@
 package adventofcode.year2022
 
-import adventofcode.common.CommonPartTest
-import adventofcode.common.Day
-
-private object Solution2022Day2 : Day<List<Solution2022Day2.RoundScore>> {
-    override val dayNum = 2
-    override val yearNum = 2022
+private object Solution2022Day2 : Day2022<List<Solution2022Day2.RoundScore>>(dayNum = 2) {
     override fun inputConverter(input: String): List<Round> =
         input.trim().lines().map {
             val (their, my) = it.split(" ")
@@ -18,16 +13,14 @@ private object Solution2022Day2 : Day<List<Solution2022Day2.RoundScore>> {
             Round2(parseTheirShape(their), parseOutcome(outcome))
         }
 
-    class Day2Part1 : CommonPartTest<List<RoundScore>>(
-        day = this,
+    class Day2Part1 : CommonPartTest(
         exampleResult = "15",
         taskResult = "8933",
     ) {
         override fun calculateResult(input: List<RoundScore>): String = input.sumOf(RoundScore::calculateScore).toString()
     }
 
-    class Day2Part2 : CommonPartTest<List<RoundScore>>(
-        day = this,
+    class Day2Part2 : CommonPartTest(
         exampleResult = "12",
         taskResult = "11998",
         inputConverter = Solution2022Day2::inputConverterPart2

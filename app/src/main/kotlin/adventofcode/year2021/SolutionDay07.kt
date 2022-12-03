@@ -1,17 +1,12 @@
 package adventofcode.year2021
 
-import adventofcode.common.CommonPartTest
-import adventofcode.common.Day
 import kotlin.math.abs
 
-private object Day07 : Day<List<Int>> {
-    override val dayNum = 7
-    override val yearNum = 2021
-    override fun inputConverter(input: String) =
+private object Day07 : Day2021<List<Int>>(dayNum = 7) {
+        override fun inputConverter(input: String) =
         input.trim().split(",").map { it.toInt() }
 
-    class Day07Part1 : CommonPartTest<List<Int>>(
-        day = this,
+    class Day07Part1 : CommonPartTest(
         exampleResult = "37",
         taskResult = "351901",
     ) {
@@ -25,8 +20,7 @@ private object Day07 : Day<List<Int>> {
         }
     }
 
-    class Day07Part2 : CommonPartTest<List<Int>>(
-        day = this,
+    class Day07Part2 : CommonPartTest(
         exampleResult = "168",
         taskResult = "101079875",
     ) {

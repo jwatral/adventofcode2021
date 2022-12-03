@@ -1,18 +1,12 @@
 package adventofcode.year2021
 
-import adventofcode.common.CommonPartTest
-import adventofcode.common.Day
-
 private typealias Heightmap = List<List<Int>>
 
-private object Day09 : Day<Heightmap> {
-    override val dayNum = 9
-    override val yearNum = 2021
-    override fun inputConverter(input: String) =
+private object Day09 : Day2021<Heightmap>(dayNum = 9) {
+        override fun inputConverter(input: String) =
         input.trim().lines().map { it.map { it.toString().toInt() } }
 
-    class Day09Part1 : CommonPartTest<Heightmap>(
-        day = this,
+    class Day09Part1 : CommonPartTest(
         exampleResult = "15",
         taskResult = "575",
     ) {
@@ -25,8 +19,7 @@ private object Day09 : Day<Heightmap> {
                 .flatten().sum().toString()
     }
 
-    class Day09Part2 : CommonPartTest<Heightmap>(
-        day = this,
+    class Day09Part2 : CommonPartTest(
         exampleResult = "1134",
         taskResult = "1019700",
     ) {

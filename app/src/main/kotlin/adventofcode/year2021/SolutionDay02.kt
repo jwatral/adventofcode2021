@@ -1,16 +1,11 @@
 package adventofcode.year2021
 
-import adventofcode.common.CommonPartTest
-import adventofcode.common.Day
 import adventofcode.year2021.Day02.Instruction.Companion.toInstruction
 
-private object Day02 : Day<List<Day02.Instruction>> {
-    override val dayNum = 2
-    override val yearNum = 2021
+private object Day02 : Day2021<List<Day02.Instruction>>(dayNum = 2) {
     override fun inputConverter(input: String): List<Instruction> = input.trim().lines().map { it.toInstruction() }
 
-    class Day02Part1 : CommonPartTest<List<Instruction>>(
-        day = this,
+    class Day02Part1 : CommonPartTest(
         exampleResult = "150",
         taskResult = "2272262",
     ) {
@@ -23,8 +18,7 @@ private object Day02 : Day<List<Day02.Instruction>> {
         }
     }
 
-    class Day02Part2 : CommonPartTest<List<Instruction>>(
-        day = this,
+    class Day02Part2 : CommonPartTest(
         exampleResult = "900",
         taskResult = "2134882034",
     ) {

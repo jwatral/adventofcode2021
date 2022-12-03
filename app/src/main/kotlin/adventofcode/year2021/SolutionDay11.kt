@@ -1,21 +1,16 @@
 package adventofcode.year2021
 
-import adventofcode.common.CommonPartTest
-import adventofcode.common.Day
 import adventofcode.common.Grid
 import adventofcode.common.PointCoordinates
 import adventofcode.common.allAdjacentPoints
 
-private object Day11 : Day<Grid<Day11.Octopus>> {
-    override val dayNum = 11
-    override val yearNum = 2021
-    override fun inputConverter(input: String) =
+private object Day11 : Day2021<Grid<Day11.Octopus>>(dayNum = 11) {
+        override fun inputConverter(input: String) =
         input.trim().lines().mapIndexed { y, row ->
             row.mapIndexed { x, initialEnergyLvl -> Octopus(x, y, initialEnergyLvl.toString().toInt()) }
         }.flatten()
 
-    class Day11Part1 : CommonPartTest<Grid<Octopus>>(
-        day = this,
+    class Day11Part1 : CommonPartTest(
         exampleResult = "1656",
         taskResult = "1601",
     ) {
@@ -39,8 +34,7 @@ private object Day11 : Day<Grid<Day11.Octopus>> {
         input.filter { it.energyLvl > 9 }.forEach { it.energyLvl = 0 }
     }
 
-    class Day11Part2 : CommonPartTest<Grid<Octopus>>(
-        day = this,
+    class Day11Part2 : CommonPartTest(
         exampleResult = "195",
         taskResult = "368",
     ) {

@@ -1,12 +1,7 @@
 package adventofcode.year2021
 
-import adventofcode.common.CommonPartTest
-import adventofcode.common.Day
-
 private typealias Board = List<List<Int>>
-private object Day04 : Day<Day04.Input> {
-    override val dayNum = 4
-    override val yearNum = 2021
+private object Day04 : Day2021<Day04.Input>(dayNum = 4) {
 
     override fun inputConverter(input: String): Input {
         val sections = input.trim().split("\n\n")
@@ -16,8 +11,7 @@ private object Day04 : Day<Day04.Input> {
         return Input(numbers, boards)
     }
 
-    class Day04Part1 : CommonPartTest<Input>(
-        day = this,
+    class Day04Part1 : CommonPartTest(
         exampleResult = "4512",
         taskResult = "35670",
     ) {
@@ -38,8 +32,7 @@ private object Day04 : Day<Day04.Input> {
         }
     }
 
-    class Day04Part2 : CommonPartTest<Input>(
-        day = this,
+    class Day04Part2 : CommonPartTest(
         exampleResult = "1924",
         taskResult = "22704",
     ) {

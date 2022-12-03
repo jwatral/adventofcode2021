@@ -1,13 +1,9 @@
 package adventofcode.year2021
 
-import adventofcode.common.CommonPartTest
-import adventofcode.common.Day
 import adventofcode.common.Point
 
-private object Day13 : Day<Day13.Input> {
-    override val dayNum = 13
-    override val yearNum = 2021
-    override fun inputConverter(input: String) =
+private object Day13 : Day2021<Day13.Input>(dayNum = 13) {
+        override fun inputConverter(input: String) =
         input.trim().lines()
             .partition { it.startsWith("fold along") }
             .let { (folds, points) ->
@@ -17,8 +13,7 @@ private object Day13 : Day<Day13.Input> {
                 )
             }
 
-    class Day13Part1 : CommonPartTest<Input>(
-        day = this,
+    class Day13Part1 : CommonPartTest(
         exampleResult = "17",
         taskResult = "647",
     ) {
@@ -36,8 +31,7 @@ private object Day13 : Day<Day13.Input> {
         }.distinct()
     }
 
-    class Day13Part2 : CommonPartTest<Input>(
-        day = this,
+    class Day13Part2 : CommonPartTest(
         exampleResult = "42",
         taskResult = "42",
     ) {
