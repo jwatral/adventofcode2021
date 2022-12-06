@@ -18,8 +18,10 @@ private object Solution2022DayTemplate : Day2022<List<Nothing>>(dayNum = TODO())
         override fun calculateResult(input: List<Nothing>): String = TODO()
     }
 
+    // @formatter:off
     override val example =
 """
 TODO
 """.trimIndent()
+    // @formatter:on
 }
