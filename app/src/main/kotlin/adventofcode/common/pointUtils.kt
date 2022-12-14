@@ -11,6 +11,11 @@ typealias Grid<T> = List<T>
 
 data class Point(override val x: Int, override val y: Int) : PointCoordinates
 
+fun Point.moveLeft(n: Int = 1) = Point(x = x - n, y = y)
+fun Point.moveRight(n: Int = 1) = Point(x = x + n, y = y)
+fun Point.moveUp(n: Int = 1) = Point(x = x, y = y + n)
+fun Point.moveDown(n: Int = 1) = Point(x = x, y = y - n)
+
 data class PointWithValue(override val x: Int, override val y: Int, val value: Int) : PointCoordinates {
     companion object {
         fun fromLines(lines: List<String>): List<PointWithValue> =
@@ -45,17 +50,29 @@ data class Line(val start: Point, val end: Point) {
     }
 }
 
+fun <T : PointCoordinates> Grid<T>.allPointsToTheLeft(point: T): List<T> =
+    this.filter { it.y == point.y && it.x < point.x }.sortedByDescending { it.x }
+
+fun <T : PointCoordinates> Grid<T>.allPointsToTheRight(point: T): List<T> =
+    this.filter { it.y == point.y && it.x > point.x }.sortedBy { it.x }
+
+fun <T : PointCoordinates> Grid<T>.allPointsToTheTop(point: T): List<T> =
+    this.filter { it.x == point.x && it.y < point.y }.sortedByDescending { it.y }
+
+fun <T : PointCoordinates> Grid<T>.allPointsToTheBottom(point: T): List<T> =
+    this.filter { it.x == point.x && it.y > point.y }.sortedBy { it.y }
+
 fun <T : PointCoordinates> Grid<T>.allAdjacentPoints(point: T): List<T> =
-    this.filter {
-        (it.x == point.x - 1 && it.y == point.y) ||
-                (it.x == point.x + 1 && it.y == point.y) ||
-                (it.x == point.x && it.y == point.y - 1) ||
-                (it.x == point.x && it.y == point.y + 1) ||
-                (it.x == point.x + 1 && it.y == point.y + 1) ||
-                (it.x == point.x - 1 && it.y == point.y - 1) ||
-                (it.x == point.x + 1 && it.y == point.y - 1) ||
-                (it.x == point.x - 1 && it.y == point.y + 1)
-    }
+    this.filter { it.isAdjacent(point) }
+
+fun <T:PointCoordinates> T.isAdjacent(point: T): Boolean = (this.x == point.x - 1 && this.y == point.y) ||
+        (this.x == point.x + 1 && this.y == point.y) ||
+        (this.x == point.x && this.y == point.y - 1) ||
+        (this.x == point.x && this.y == point.y + 1) ||
+        (this.x == point.x + 1 && this.y == point.y + 1) ||
+        (this.x == point.x - 1 && this.y == point.y - 1) ||
+        (this.x == point.x + 1 && this.y == point.y - 1) ||
+        (this.x == point.x - 1 && this.y == point.y + 1)
 
 fun <T : PointCoordinates> Grid<T>.allStraightAdjacentPoints(point: T): List<T> =
     this.filter {
