@@ -6,15 +6,15 @@ import adventofcode.common.print
 import adventofcode.common.repeatSquareAndTransform
 import adventofcode.common.toGraph
 
-private object Day15 : Day2021<Grid<PointWithValue>>(dayNum = 15) {
+private object Day15 : Day2021<Grid<PointWithValue<Int>>>(dayNum = 15) {
         override fun inputConverter(input: String) =
-        input.trim().lines().let { PointWithValue.fromLines(it) }
+        input.trim().lines().let { PointWithValue.fromLinesInt(it) }
 
     class Day15Part1 : CommonPartTest(
         exampleResult = "40",
         taskResult = "373",
     ) {
-        override fun calculateResult(input: Grid<PointWithValue>): String =
+        override fun calculateResult(input: Grid<PointWithValue<Int>>): String =
             input.toGraph()
                 .shortestPath(input.first(), input.last())
                 .sumOf { it.value }
@@ -26,7 +26,7 @@ private object Day15 : Day2021<Grid<PointWithValue>>(dayNum = 15) {
         exampleResult = "315",
         taskResult = "2868",
     ) {
-        override fun calculateResult(input: Grid<PointWithValue>): String =
+        override fun calculateResult(input: Grid<PointWithValue<Int>>): String =
             input
                 .repeatSquareAndTransform(5) { value, x, y ->
                     val newValue = value + x + y

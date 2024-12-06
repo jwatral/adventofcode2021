@@ -16,15 +16,21 @@ fun Point.moveRight(n: Int = 1) = Point(x = x + n, y = y)
 fun Point.moveUp(n: Int = 1) = Point(x = x, y = y + n)
 fun Point.moveDown(n: Int = 1) = Point(x = x, y = y - n)
 
-data class PointWithValue(override val x: Int, override val y: Int, val value: Int) : PointCoordinates {
+data class PointWithValue<T>(override val x: Int, override val y: Int, val value: T) : PointCoordinates {
     companion object {
-        fun fromLines(lines: List<String>): List<PointWithValue> =
-            lines.mapIndexed { y, row -> row.mapIndexed { x, value -> PointWithValue(x, y, value.toString().toInt()) } }
+        fun fromLinesInt(lines: List<String>): List<PointWithValue<Int>> =
+            fromLinesGeneric(lines) { it.toString().toInt() }
+
+        fun fromLinesChar(lines: List<String>): List<PointWithValue<Char>> =
+            fromLinesGeneric(lines) { it }
+
+        private fun <T> fromLinesGeneric(lines: List<String>, transform: (Char) -> T): List<PointWithValue<T>> =
+            lines.mapIndexed { y, row -> row.mapIndexed { x, value -> PointWithValue(x, y, transform(value)) } }
                 .flatten()
     }
 }
 
-fun Grid<PointWithValue>.toGraph(): Graph<PointWithValue> =
+fun Grid<PointWithValue<Int>>.toGraph(): Graph<PointWithValue<Int>> =
     Graph(
         this.map { point ->
             this.allStraightAdjacentPoints(point).map { neigbour -> (point to neigbour) to neigbour.value }
@@ -62,8 +68,32 @@ fun <T : PointCoordinates> Grid<T>.allPointsToTheTop(point: T): List<T> =
 fun <T : PointCoordinates> Grid<T>.allPointsToTheBottom(point: T): List<T> =
     this.filter { it.x == point.x && it.y > point.y }.sortedBy { it.y }
 
+fun <T : PointCoordinates> Grid<T>.allPointsToTheTopLeft(point: T): List<T> =
+    this.filter { (it.x - point.x) == (it.y - point.y) && it.x < point.x }.sortedByDescending { it.y }
+
+fun <T : PointCoordinates> Grid<T>.allPointsToTheTopRight(point: T): List<T> =
+    this.filter { (it.x - point.x) == -(it.y - point.y) && it.x > point.x }.sortedByDescending { it.y }
+
+fun <T : PointCoordinates> Grid<T>.allPointsToTheBottomLeft(point: T): List<T> =
+    this.filter { (it.x - point.x) == -(it.y - point.y) && it.x < point.x }.sortedBy { it.y }
+
+fun <T : PointCoordinates> Grid<T>.allPointsToTheBottomRight(point: T): List<T> =
+    this.filter { (it.x - point.x) == (it.y - point.y) && it.x > point.x }.sortedBy { it.y }
+
 fun <T : PointCoordinates> Grid<T>.allAdjacentPoints(point: T): List<T> =
     this.filter { it.isAdjacent(point) }
+
+fun <T : PointCoordinates> Grid<T>.pointUp(point: T): T? =
+    this.find { it.x == point.x && it.y == point.y - 1 }
+
+fun <T : PointCoordinates> Grid<T>.pointDown(point: T): T? =
+    this.find { it.x == point.x && it.y == point.y + 1 }
+
+fun <T : PointCoordinates> Grid<T>.pointLeft(point: T): T? =
+    this.find { it.x == point.x - 1 && it.y == point.y }
+
+fun <T : PointCoordinates> Grid<T>.pointRight(point: T): T? =
+    this.find { it.x == point.x + 1 && it.y == point.y }
 
 fun <T:PointCoordinates> T.isAdjacent(point: T): Boolean = (this.x == point.x - 1 && this.y == point.y) ||
         (this.x == point.x + 1 && this.y == point.y) ||
@@ -85,10 +115,10 @@ fun <T : PointCoordinates> Grid<T>.allStraightAdjacentPoints(point: T): List<T> 
 fun <T : PointCoordinates> Grid<T>.width() = this.maxOf { it.x }
 fun <T : PointCoordinates> Grid<T>.height() = this.maxOf { it.y }
 
-fun Grid<PointWithValue>.repeatSquareAndTransform(
+fun Grid<PointWithValue<Int>>.repeatSquareAndTransform(
     times: Int,
     transform: (value: Int, x: Int, y: Int) -> Int
-): Grid<PointWithValue> = this.let { grid ->
+): Grid<PointWithValue<Int>> = this.let { grid ->
     val width = grid.width() + 1
     val height = grid.height() + 1
     grid.map { originalPoint ->
@@ -104,7 +134,7 @@ fun Grid<PointWithValue>.repeatSquareAndTransform(
     }.flatten().flatten()
 }
 
-fun Grid<PointWithValue>.print() {
+fun <T> Grid<PointWithValue<T>>.print() {
     val maxX = width()
     val maxY = height()
     for(y in 0..maxY) {
